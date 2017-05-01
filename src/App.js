@@ -38,6 +38,9 @@ class App extends Component {
     return (
       <div className="App">
           <h2>{greetUser(greeting, user)}</h2>
+          { list.map(function(item) {
+            return <div>{item.title}</div>;
+          })}
       </div>
     );
   }
