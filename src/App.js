@@ -37,9 +37,18 @@ class App extends Component {
 
     return (
       <div className="App">
-          <h2>{greetUser(greeting, user)}</h2>
+        <h2>{greetUser(greeting, user)}</h2>
           { list.map(function(item) {
-            return <div>{item.title}</div>;
+            return (
+              <div>
+                <span>
+                  <a href={item.url}>{item.title}</a>
+                </span>
+                <span>{item.author}</span>
+                <span>{item.num_comments}</span>
+                <span>{item.points}</span>
+              </div>
+            );
           })}
       </div>
     );
