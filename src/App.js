@@ -40,7 +40,7 @@ class App extends Component {
         <h2>{greetUser(greeting, user)}</h2>
           { list.map(function(item) {
             return (
-              <div>
+              <div key={item.objectID}>
                 <span>
                   <a href={item.url}>{item.title}</a>
                 </span>
