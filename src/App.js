@@ -18,7 +18,24 @@ const list = [
     points: 5,
     objectID: 1,
   },
-]
+];
+
+const animeList = [
+  {
+    title: 'Sword Art Online',
+    hero: 'Kazuto Kirigaya',
+    heroine: 'Asuna Yuki',
+    studio: 'A1',
+    objectID: 0
+  },
+  {
+    title: 'When Supernatural Battles Became Commonplace',
+    hero: 'Andou July',
+    heroine: 'Tomoyo Kanzaki',
+    studio: 'Trigger',
+    objectID: 1
+  }
+];
 
 class App extends Component {
   render() {
@@ -38,18 +55,25 @@ class App extends Component {
     return (
       <div className="App">
         <h2>{greetUser(greeting, user)}</h2>
-          { list.map(function(item) {
-            return (
-              <div key={item.objectID}>
-                <span>
-                  <a href={item.url}>{item.title}</a>
-                </span>
-                <span>{item.author}</span>
-                <span>{item.num_comments}</span>
-                <span>{item.points}</span>
-              </div>
-            );
-          })}
+        { list.map(function(item) {
+          return (
+            <div key={item.objectID}>
+              <span>
+                <a href={item.url}>{item.title}</a>
+              </span>
+              <span>{item.author}</span>
+              <span>{item.num_comments}</span>
+              <span>{item.points}</span>
+            </div>
+          );
+        })}
+        { animeList.map((item) =>
+          <div key={item.objectID}>
+            <h3>{item.title}</h3>
+            <p>Lead characters: {item.hero} and {item.heroine}</p>
+            <p>Studio: {item.studio}</p>
+          </div>
+        )}
       </div>
     );
   }
