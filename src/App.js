@@ -13,7 +13,7 @@ const list = [
   {
     title: 'Redux',
     url: 'https://github.com/reactjs/redux',
-    author: 'Dan Abramov, Andrew Clark',
+    author: 'Dan Abramov and Andrew Clark',
     num_comments: 2,
     points: 5,
     objectID: 1,
@@ -60,9 +60,9 @@ class App extends Component {
             <span>
               <a href={item.url}>{item.title}</a>
             </span>
-            <span>{item.author}</span>
-            <span>{item.num_comments}</span>
-            <span>{item.points}</span>
+            <span> by {item.author},</span>
+            <span> {item.num_comments} comments,</span>
+            <span> {item.points} points</span>
           </div>
         )}
         { animeList.map((item) =>
