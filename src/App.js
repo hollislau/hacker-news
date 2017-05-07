@@ -43,6 +43,7 @@ class App extends Component {
 
     this.state = {
       list: list,
+      animeList: animeList
     }
   }
 
@@ -73,7 +74,7 @@ class App extends Component {
             <span> {item.points} points</span>
           </div>
         )}
-        { animeList.map((item) =>
+        { this.state.animeList.map((item) =>
           <div key={item.objectID}>
             <h3>{item.title}</h3>
             <p>Lead characters: {item.hero} and {item.heroine}</p>
