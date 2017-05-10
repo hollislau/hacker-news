@@ -63,22 +63,22 @@ class App extends Component {
 
     return (
       <div className="App">
-        <h2>{greetUser(greeting, user)}</h2>
+        <h2>{ greetUser(greeting, user) }</h2>
         { this.state.list.map((item) =>
-          <div key={item.objectID}>
+          <div key={ item.objectID }>
             <span>
-              <a href={item.url}>{item.title}</a>
+              <a href={ item.url }>{ item.title }</a>
             </span>
-            <span> by {item.author},</span>
-            <span> {item.num_comments} comments,</span>
-            <span> {item.points} points</span>
+            <span> by { item.author },</span>
+            <span> { item.num_comments } comments,</span>
+            <span> { item.points } points</span>
           </div>
         )}
         { this.state.animeList.map((item) =>
-          <div key={item.objectID}>
-            <h3>{item.title}</h3>
-            <p>Lead characters: {item.hero} and {item.heroine}</p>
-            <p>Studio: {item.studio}</p>
+          <div key={ item.objectID }>
+            <h3>{ item.title }</h3>
+            <p>Lead characters: { item.hero } and { item.heroine }</p>
+            <p>Studio: { item.studio }</p>
           </div>
         )}
       </div>
