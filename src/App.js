@@ -56,9 +56,9 @@ class App extends Component {
 
     const greetUser = (greeting, user) => {
       if (user) {
-        return greeting + ', ' + user.firstName + ' ' + user.lastName + '!';
+        return `${ greeting }, ${ user.firstName } ${ user.lastName }!`;
       }
-      return greeting + ', stranger!';
+      return `${ greeting }, stranger!`;
     }
 
     return (
