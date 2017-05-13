@@ -72,6 +72,9 @@ class App extends Component {
             <span> by { item.author },</span>
             <span> { item.num_comments } comments,</span>
             <span> { item.points } points</span>
+            <button onClick={ () => this.onDismiss(item.objectID) } type="button">
+              Dismiss
+            </button>
           </div>
         )}
         { this.state.animeList.map((item) =>
