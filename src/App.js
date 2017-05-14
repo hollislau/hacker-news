@@ -37,6 +37,17 @@ const animeList = [
   }
 ];
 
+function Dismiss(props) {
+  return (
+    <button
+      onClick={ () => props.dismiss(props.id, props.listName) }
+      type="button"
+    >
+      Dismiss
+    </button>
+  );
+}
+
 class App extends Component {
   constructor (props) {
     super(props);
@@ -45,15 +56,13 @@ class App extends Component {
       list,
       animeList
     }
-
-    this.onDismiss = this.onDismiss.bind(this);
   }
 
-  onDismiss(id) {
+  onDismiss = (id, listName) => {
     const isNotId = item => item.objectID !== id;
-    const updatedList = this.state.list.filter(isNotId);
+    const updatedList = this.state[listName].filter(isNotId);
 
-    this.setState({ list: updatedList });
+    this.setState({ [listName]: updatedList });
   }
 
   render() {
@@ -81,12 +90,11 @@ class App extends Component {
             <span> by { item.author },</span>
             <span> { item.num_comments } comments,</span>
             <span> { item.points } points</span>
-            <button
-              onClick={ () => this.onDismiss(item.objectID) }
-              type="button"
-            >
-              Dismiss
-            </button>
+            <Dismiss
+              listName="list"
+              id={ item.objectID }
+              dismiss={ this.onDismiss }
+            />
           </div>
         )}
         { this.state.animeList.map((item) =>
@@ -94,6 +102,11 @@ class App extends Component {
             <h3>{ item.title }</h3>
             <p>Lead characters: { item.hero } and { item.heroine }</p>
             <p>Studio: { item.studio }</p>
+            <Dismiss
+              listName="animeList"
+              id={ item.objectID }
+              dismiss={ this.onDismiss }
+            />
           </div>
         )}
       </div>
