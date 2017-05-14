@@ -45,6 +45,12 @@ class App extends Component {
       list,
       animeList
     }
+
+    this.onDismiss = this.onDismiss.bind(this);
+  }
+
+  onDismiss(id) {
+
   }
 
   render() {
