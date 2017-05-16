@@ -20,68 +20,25 @@ const list = [
   },
 ];
 
-const animeList = [
-  {
-    title: 'Sword Art Online',
-    hero: 'Kazuto Kirigaya',
-    heroine: 'Asuna Yuki',
-    studio: 'A1',
-    objectID: 0
-  },
-  {
-    title: 'When Supernatural Battles Became Commonplace',
-    hero: 'Andou July',
-    heroine: 'Tomoyo Kanzaki',
-    studio: 'Trigger',
-    objectID: 1
-  }
-];
-
-function Dismiss(props) {
-  return (
-    <button
-      onClick={ () => props.dismiss(props.id, props.listName) }
-      type="button"
-    >
-      Dismiss
-    </button>
-  );
-}
-
 class App extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
 
     this.state = {
-      list,
-      animeList
+      list
     }
   }
 
-  onDismiss = (id, listName) => {
+  onDismiss = (id) => {
     const isNotId = item => item.objectID !== id;
-    const updatedList = this.state[listName].filter(isNotId);
+    const updatedList = this.state.list.filter(isNotId);
 
-    this.setState({ [listName]: updatedList });
+    this.setState({ list: updatedList });
   }
 
   render() {
-    const greeting = 'Hello';
-    const user = {
-      firstName: 'Asuna',
-      lastName: 'Yuki'
-    }
-
-    const greetUser = (greeting, user) => {
-      if (user) {
-        return `${ greeting }, ${ user.firstName } ${ user.lastName }!`;
-      }
-      return `${ greeting }, stranger!`;
-    }
-
     return (
       <div className="App">
-        <h2>{ greetUser(greeting, user) }</h2>
         { this.state.list.map((item) =>
           <div key={ item.objectID }>
             <span>
@@ -90,23 +47,12 @@ class App extends Component {
             <span> by { item.author },</span>
             <span> { item.num_comments } comments,</span>
             <span> { item.points } points</span>
-            <Dismiss
-              listName="list"
-              id={ item.objectID }
-              dismiss={ this.onDismiss }
-            />
-          </div>
-        )}
-        { this.state.animeList.map((item) =>
-          <div key={ item.objectID }>
-            <h3>{ item.title }</h3>
-            <p>Lead characters: { item.hero } and { item.heroine }</p>
-            <p>Studio: { item.studio }</p>
-            <Dismiss
-              listName="animeList"
-              id={ item.objectID }
-              dismiss={ this.onDismiss }
-            />
+            <button
+              onClick={ () => this.onDismiss(item.objectID) }
+              type="button"
+            >
+              Dismiss
+            </button>
           </div>
         )}
       </div>
