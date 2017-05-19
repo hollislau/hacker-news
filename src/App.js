@@ -1,24 +1,11 @@
 import React, { Component } from 'react';
 import './App.css';
 
-const list = [
-  {
-    title: 'React',
-    url: 'https://facebook.github.io/react/',
-    author: 'Jordan Walke',
-    num_comments: 3,
-    points: 4,
-    objectID: 0,
-  },
-  {
-    title: 'Redux',
-    url: 'https://github.com/reactjs/redux',
-    author: 'Dan Abramov and Andrew Clark',
-    num_comments: 2,
-    points: 5,
-    objectID: 1,
-  },
-];
+const DEFAULT_QUERY = 'Redux';
+
+const PATH_BASE = 'https://hn.algolia.com/api/v1';
+const PATH_SEARCH = '/search';
+const PARAM_SEARCH = 'query=';
 
 const largeColumn = { width: '40%' };
 const midColumn = { width: '30%' };
@@ -76,24 +63,43 @@ class App extends Component {
     super(props);
 
     this.state = {
-      list,
-      searchTerm: ''
+      result: null,
+      searchTerm: DEFAULT_QUERY
     }
   }
 
-  onDismiss = (id) => {
+  setSearchTopStories = result => this.setState({ result });
+
+  fetchSearchTopStories = searchTerm => {
+    fetch(`${ PATH_BASE }${ PATH_SEARCH }?${ PARAM_SEARCH }${ searchTerm }`)
+      .then(res => {
+        if (res.ok) return res.json();
+
+        throw new Error('Network response not okay!');
+      })
+      .then(data => this.setSearchTopStories(data))
+      .catch(err => console.log(`Fetch error: ${ err.message }`));
+  }
+
+  onDismiss = id => {
     const isNotId = item => item.objectID !== id;
     const updatedList = this.state.list.filter(isNotId);
 
     this.setState({ list: updatedList });
   }
 
-  onSearchChange = (event) => {
-    this.setState({ searchTerm: event.target.value });
+  onSearchChange = event => this.setState({ searchTerm: event.target.value });
+
+  componentDidMount() {
+    const { searchTerm } = this.state;
+
+    this.fetchSearchTopStories(searchTerm);
   }
 
   render() {
-    const { list, searchTerm } = this.state;
+    const { result, searchTerm } = this.state;
+
+    if (!result) return null;
 
     return (
       <div className="page">
@@ -106,7 +112,7 @@ class App extends Component {
           </Search>
         </div>
         <Table
-          list={ list }
+          list={ result.hits }
           pattern={ searchTerm }
           onDismiss={ this.onDismiss }
         />
