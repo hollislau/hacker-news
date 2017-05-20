@@ -71,20 +71,26 @@ class App extends Component {
     super(props);
 
     this.state = {
-      result: null,
+      results: null,
+      searchKey: '',
       searchTerm: DEFAULT_QUERY
     }
   }
 
-  setSearchTopStories = result => {
+  setSearchTopStories = (result) => {
+    const { searchKey, results } = this.state;
     const { hits, page } = result;
-    const oldHits = page !== 0
-      ? this.state.result.hits
+
+    const oldHits = results && results[searchKey]
+      ? results[searchKey].hits
       : [];
     const updatedHits = [...oldHits, ...hits];
 
     this.setState({
-      result: { hits: updatedHits, page }
+      results: {
+        ...results,
+        [searchKey]: { hits: updatedHits, page }
+      }
     });
   }
 
@@ -95,12 +101,13 @@ class App extends Component {
 
         throw new Error('Network response not okay!');
       })
-      .then(data => this.setSearchTopStories(data))
+      .then(result => this.setSearchTopStories(result))
       .catch(err => console.log(`Fetch error: ${ err.message }`));
   }
 
   onDismiss = id => {
     const { result } = this.state;
+
     const isNotId = item => item.objectID !== id;
     const updatedList = result.hits.filter(isNotId);
 
@@ -114,6 +121,7 @@ class App extends Component {
   onSearchSubmit = e => {
     const { searchTerm } = this.state;
 
+    this.setState({ searchKey: searchTerm });
     this.fetchSearchTopStories(searchTerm, DEFAULT_PAGE);
     e.preventDefault();
   }
@@ -121,12 +129,15 @@ class App extends Component {
   componentDidMount() {
     const { searchTerm } = this.state;
 
+    this.setState({ searchKey: searchTerm });
     this.fetchSearchTopStories(searchTerm, DEFAULT_PAGE);
   }
 
   render() {
-    const { result, searchTerm } = this.state;
-    const page = (result && result.page) || 0;
+    const { results, searchKey, searchTerm } = this.state;
+
+    const page = (results && results[searchKey] && results[searchKey].page) || 0;
+    const list = (results && results[searchKey] && results[searchKey].hits) || [];
 
     return (
       <div className="page">
@@ -139,14 +150,12 @@ class App extends Component {
             Search
           </Search>
         </div>
-        { result &&
-          <Table
-            list={ result.hits }
-            onDismiss={ this.onDismiss }
-          />
-        }
+        <Table
+          list={ list }
+          onDismiss={ this.onDismiss }
+        />
         <div className="interactions">
-          <Button onClick={ () => this.fetchSearchTopStories(searchTerm, page + 1) }>
+          <Button onClick={ () => this.fetchSearchTopStories(searchKey, page + 1) }>
             More
           </Button>
         </div>
