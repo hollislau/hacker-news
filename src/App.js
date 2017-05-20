@@ -11,9 +11,6 @@ const largeColumn = { width: '40%' };
 const midColumn = { width: '30%' };
 const smallColumn = { width: '10%' };
 
-const isSearched = (searchTerm) => (item) =>
-  !searchTerm || item.title.toLowerCase().includes(searchTerm.toLowerCase());
-
 const Button = ({ onClick, className = '', children }) =>
   <button
     onClick={ onClick }
@@ -35,9 +32,9 @@ const Search = ({ value, onChange, onSubmit, children }) =>
     </button>
   </form>
 
-const Table = ({ list, pattern, onDismiss }) =>
+const Table = ({ list, onDismiss }) =>
   <div className="table">
-    { list.filter(isSearched(pattern)).map((item) =>
+    { list.map((item) =>
       <div
         key={ item.objectID }
         className="table-row"
@@ -98,12 +95,13 @@ class App extends Component {
     });
   }
 
-  onSearchChange = event => this.setState({ searchTerm: event.target.value });
+  onSearchChange = e => this.setState({ searchTerm: e.target.value });
 
-  onSearchSubmit = () => {
+  onSearchSubmit = e => {
     const { searchTerm } = this.state;
 
     this.fetchSearchTopStories(searchTerm);
+    e.preventDefault();
   }
 
   componentDidMount() {
@@ -129,7 +127,6 @@ class App extends Component {
         { result &&
           <Table
             list={ result.hits }
-            pattern={ searchTerm }
             onDismiss={ this.onDismiss }
           />
         }
