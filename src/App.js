@@ -23,14 +23,16 @@ const Button = ({ onClick, className = '', children }) =>
     { children }
   </button>
 
-const Search = ({ value, onChange, children }) =>
-  <form>
-    { children }
+const Search = ({ value, onChange, onSubmit, children }) =>
+  <form onSubmit={ onSubmit }>
     <input
       type="text"
       value={ value }
       onChange={ onChange }
     />
+    <button type="submit">
+      { children }
+    </button>
   </form>
 
 const Table = ({ list, pattern, onDismiss }) =>
@@ -98,6 +100,12 @@ class App extends Component {
 
   onSearchChange = event => this.setState({ searchTerm: event.target.value });
 
+  onSearchSubmit = () => {
+    const { searchTerm } = this.state;
+
+    this.fetchSearchTopStories(searchTerm);
+  }
+
   componentDidMount() {
     const { searchTerm } = this.state;
 
@@ -113,6 +121,7 @@ class App extends Component {
           <Search
             value={ searchTerm }
             onChange={ this.onSearchChange }
+            onSubmit={ this.onSearchSubmit }
           >
             Search
           </Search>
