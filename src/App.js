@@ -74,7 +74,9 @@ class App extends Component {
     }
   }
 
-  setSearchTopStories = result => this.setState({ result });
+  setSearchTopStories = result => {
+    this.setState({ result });
+  }
 
   fetchSearchTopStories = (searchTerm, page) => {
     fetch(`${ PATH_BASE }${ PATH_SEARCH }?${ PARAM_SEARCH }${ searchTerm }&${ PARAM_PAGE }${ page }`)
@@ -114,6 +116,7 @@ class App extends Component {
 
   render() {
     const { result, searchTerm } = this.state;
+    const page = (result && result.page) || 0;
 
     return (
       <div className="page">
@@ -132,6 +135,11 @@ class App extends Component {
             onDismiss={ this.onDismiss }
           />
         }
+        <div className="interactions">
+          <Button onClick={ () => this.fetchSearchTopStories(searchTerm, page + 1) }>
+            More
+          </Button>
+        </div>
       </div>
     );
   }
