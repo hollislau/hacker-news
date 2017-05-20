@@ -77,7 +77,7 @@ class App extends Component {
     }
   }
 
-  setSearchTopStories = (result) => {
+  setTopStories = (result) => {
     const { searchKey, results } = this.state;
     const { hits, page } = result;
 
@@ -94,16 +94,18 @@ class App extends Component {
     });
   }
 
-  fetchSearchTopStories = (searchTerm, page) => {
+  fetchTopStories = (searchTerm, page) => {
     fetch(`${ PATH_BASE }${ PATH_SEARCH }?${ PARAM_SEARCH }${ searchTerm }&${ PARAM_PAGE }${ page }&${ PARAM_HPP }${ DEFAULT_HPP }`)
       .then(res => {
         if (res.ok) return res.json();
 
         throw new Error('Network response not okay!');
       })
-      .then(result => this.setSearchTopStories(result))
+      .then(result => this.setTopStories(result))
       .catch(err => console.log(`Fetch error: ${ err.message }`));
   }
+
+  shouldFetchTopStories = searchTerm => !this.state.results[searchTerm.toLowerCase()];
 
   onDismiss = id => {
     const { results, searchKey } = this.state;
@@ -125,16 +127,19 @@ class App extends Component {
   onSearchSubmit = e => {
     const { searchTerm } = this.state;
 
-    this.setState({ searchKey: searchTerm });
-    this.fetchSearchTopStories(searchTerm, DEFAULT_PAGE);
+    if (this.shouldFetchTopStories(searchTerm)) {
+      this.fetchTopStories(searchTerm, DEFAULT_PAGE);
+    }
+
+    this.setState({ searchKey: searchTerm.toLowerCase() });
     e.preventDefault();
   }
 
   componentDidMount() {
     const { searchTerm } = this.state;
 
-    this.setState({ searchKey: searchTerm });
-    this.fetchSearchTopStories(searchTerm, DEFAULT_PAGE);
+    this.fetchTopStories(searchTerm, DEFAULT_PAGE);
+    this.setState({ searchKey: searchTerm.toLowerCase() });
   }
 
   render() {
@@ -159,7 +164,7 @@ class App extends Component {
           onDismiss={ this.onDismiss }
         />
         <div className="interactions">
-          <Button onClick={ () => this.fetchSearchTopStories(searchKey, page + 1) }>
+          <Button onClick={ () => this.fetchTopStories(searchKey, page + 1) }>
             More
           </Button>
         </div>
