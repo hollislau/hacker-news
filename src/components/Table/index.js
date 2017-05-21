@@ -41,6 +41,7 @@ Table.propTypes = {
   list: PropTypes.arrayOf(
     PropTypes.shape({
       objectID: PropTypes.string.isRequired,
+      title: PropTypes.string,
       author: PropTypes.string,
       url: PropTypes.string,
       num_comments: PropTypes.number,
