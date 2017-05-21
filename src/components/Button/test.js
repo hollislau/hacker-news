@@ -6,10 +6,9 @@ import Button from '.';
 describe('Button', () => {
   it('renders', () => {
     const div = document.createElement('div');
-    const onClick = () => {};
 
     ReactDOM.render(
-      <Button onClick={ onClick }>
+      <Button onClick={ () => {} }>
         Button
       </Button>,
       div
@@ -17,9 +16,8 @@ describe('Button', () => {
   });
 
   test('snapshots', () => {
-    const onClick = () => {};
     const component = renderer.create(
-      <Button onClick={ onClick }>
+      <Button onClick={ () => {} }>
         Button
       </Button>
     );
