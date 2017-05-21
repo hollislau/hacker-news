@@ -4,31 +4,20 @@ import renderer from 'react-test-renderer';
 import Search from '.';
 
 describe('Search', () => {
+  const props = {
+    value: 'search',
+    onChange: () => {},
+    onSubmit: () => {}
+  }
+
   it('renders', () => {
     const div = document.createElement('div');
 
-    ReactDOM.render(
-      <Search
-        value=""
-        onChange={ () => {} }
-        onSubmit={ () => {} }
-      >
-        Search
-      </Search>,
-      div
-    );
+    ReactDOM.render(<Search { ...props }>Search</Search>, div);
   });
 
   test('snapshots', () => {
-    const component = renderer.create(
-      <Search
-        value=""
-        onChange={ () => {} }
-        onSubmit={ () => {} }
-      >
-        Search
-      </Search>
-    );
+    const component = renderer.create(<Search { ...props }>Search</Search>);
     const tree = component.toJSON();
 
     expect(tree).toMatchSnapshot();

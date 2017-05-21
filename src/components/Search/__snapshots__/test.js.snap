@@ -4,7 +4,7 @@ exports[`Search snapshots 1`] = `
   <input
     onChange={[Function]}
     type="text"
-    value="" />
+    value="search" />
   <button
     type="submit">
     Search
