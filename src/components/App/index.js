@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './App.css';
+import './index.css';
 
 const DEFAULT_QUERY = 'Redux';
 const DEFAULT_PAGE = '0';
@@ -173,4 +173,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default App;//
