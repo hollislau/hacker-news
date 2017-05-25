@@ -1,2 +1,3 @@
-# hacker-news
-Basic React app utilizing Hacker News API
+# Hacker News
+
+A basic React app utilizing the Hacker News API to search for and display articles.
