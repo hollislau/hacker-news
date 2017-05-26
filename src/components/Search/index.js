@@ -11,7 +11,7 @@ const Search = ({ value, onChange, onSubmit, children }) =>
     <button type="submit">
       { children }
     </button>
-  </form>
+  </form>;
 
 Search.propTypes = {
   value: PropTypes.string.isRequired,

@@ -35,7 +35,7 @@ const Table = ({ list, onDismiss }) =>
         </span>
       </div>
     )}
-  </div>
+  </div>;
 
 Table.propTypes = {
   list: PropTypes.arrayOf(

@@ -9,7 +9,7 @@ const Button = ({ onClick, className, children }) =>
     type="button"
   >
     { children }
-  </button>
+  </button>;
 
 Button.propTypes = {
   onClick: PropTypes.func.isRequired,
