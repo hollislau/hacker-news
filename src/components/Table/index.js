@@ -9,7 +9,7 @@ const smallColumn = { width: '10%' };
 
 const Table = ({ list, onDismiss }) =>
   <div className="table">
-    { list.map((item) =>
+    { list.map(item =>
       <div
         key={ item.objectID }
         className="table-row"

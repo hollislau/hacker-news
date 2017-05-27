@@ -25,7 +25,7 @@ class App extends Component {
     }
   }
 
-  setTopStories = (result) => {
+  setTopStories = result => {
     const { searchKey, results } = this.state;
     const { hits, page } = result;
 
