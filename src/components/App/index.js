@@ -42,7 +42,7 @@ class App extends Component {
     });
   }
 
-  fetchTopStories = (searchTerm, page) => {
+  fetchTopStories = (searchTerm, page) =>
     fetch(`${ PATH_BASE }${ PATH_SEARCH }?${ PARAM_SEARCH }${ searchTerm }&${ PARAM_PAGE }${ page }&${ PARAM_HPP }${ DEFAULT_HPP }`)
       .then(res => {
         if (res.ok) return res.json();
@@ -51,7 +51,6 @@ class App extends Component {
       })
       .then(result => this.setTopStories(result))
       .catch(err => console.log(`Fetch error: ${ err.message }`));
-  }
 
   shouldFetchTopStories = searchTerm => !this.state.results[searchTerm.toLowerCase()];
 
